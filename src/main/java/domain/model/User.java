@@ -1,20 +1,16 @@
 package domain.model;
 
-import org.bson.codecs.pojo.annotations.BsonId;
-import io.quarkus.mongodb.panache.PanacheMongoEntity;
-import io.quarkus.mongodb.panache.common.MongoEntity;
+import domain.enums.Role;
 import lombok.Builder;
 import lombok.Data;
-import domain.enums.Role;
-import lombok.EqualsAndHashCode;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
 
 @Data
 @Builder
-@EqualsAndHashCode(callSuper = true)
-@MongoEntity(collection="users")
-public class User extends PanacheMongoEntity {
+public class User {
     @BsonId
-    private String id;
+    private ObjectId id;
     private String name;
     private String email;
     private Role role;

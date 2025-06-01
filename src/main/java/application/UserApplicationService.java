@@ -9,13 +9,9 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class UserApplicationService {
     
-    private final UserRepository userRepository;
-    
     @Inject
-    public UserApplicationService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-    
+    UserRepository userRepository;
+
     public User createUser(CreateUserCommand command) {
         var user = User.builder()
             .name(command.getName())
@@ -23,6 +19,9 @@ public class UserApplicationService {
             .role(command.getRole())
             .build();
             
-        return userRepository.save(user);
+        userRepository.persist(user);
+        
+        return userRepository.findByEmail(command.getEmail())
+            .orElseThrow(() -> new IllegalArgumentException("User with email " + command.getEmail() + " not created"));
     }
 }

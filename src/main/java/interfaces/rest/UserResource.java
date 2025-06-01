@@ -34,6 +34,11 @@ public class UserResource {
         
 
         var user = applicationService.createUser(command);
+        if (user == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                .entity("User creation failed")
+                .build();
+        }
         return Response.ok(user).build();
     }
 }

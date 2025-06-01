@@ -1,13 +1,14 @@
 package domain.ports;
 
 import domain.model.User;
-import java.util.List;
+import io.quarkus.mongodb.panache.PanacheMongoRepository;
+
 import java.util.Optional;
 
-public interface UserRepository {
-    User save(User user);
-    Optional<User> findById(String id);
+public interface UserRepository extends PanacheMongoRepository<User> {
+    
     Optional<User> findByEmail(String email);
-    List<User> findAll();
+    Optional<User> findById(String id);
     void delete(String id);
+    
 }
