@@ -19,7 +19,7 @@ public class UserApplicationService {
             .role(command.getRole())
             .build();
             
-        userRepository.persist(user);
+        userRepository.persistOrUpdate(user);
         
         return userRepository.findByEmail(command.getEmail())
             .orElseThrow(() -> new IllegalArgumentException("User with email " + command.getEmail() + " not created"));
