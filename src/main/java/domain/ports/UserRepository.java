@@ -1,14 +1,22 @@
 package domain.ports;
 
-import domain.model.User;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
-
 import java.util.Optional;
+import domain.model.User;
+import org.bson.types.ObjectId;
+import jakarta.enterprise.context.ApplicationScoped;
 
-public interface UserRepository extends PanacheMongoRepository<User> {
-    
-    Optional<User> findByEmail(String email);
-    Optional<User> findById(String id);
-    void delete(String id);
-    
+@ApplicationScoped
+public class UserRepository implements PanacheMongoRepository<User> {
+    public Optional<User> findByEmail(String email) {
+        return Optional.ofNullable(find("email", email).firstResult());
+    }
+
+    public Optional<User> findById(String id) {
+        return Optional.ofNullable(findByIdOptional(new ObjectId(id)).orElse(null));
+    }
+
+    public void deleteByEmail(String email) {
+        findByEmail(email).ifPresent(this::delete);
+    }
 }

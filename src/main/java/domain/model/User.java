@@ -1,32 +1,34 @@
 package domain.model;
 
 import domain.enums.Role;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
 
-import org.bson.codecs.pojo.annotations.BsonCreator;
+import java.time.LocalDateTime;
+
 import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
+import java.util.List;
+
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
-    @BsonProperty(value = "id")
+
     @BsonId
     private ObjectId id;
-    private String name;
+    private String name;    
     private String email;
-    private Role role;
+    private String password; 
+    private List<Role> roles;
+    @Builder.Default 
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 
-    @BsonCreator
-    public User(@BsonId ObjectId id, @BsonProperty("name") String name, @BsonProperty("email") String email, @BsonProperty("role") Role role) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.role = role;
-    }
-    
 }
 
