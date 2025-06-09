@@ -1,4 +1,4 @@
-package app;
+package interfaces.rest;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
